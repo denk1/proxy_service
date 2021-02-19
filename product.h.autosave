@@ -1,0 +1,23 @@
+#ifndef PRODUCT_H
+#define PRODUCT_H
+
+#include <QThread>
+#include <QSerialPort>
+
+
+class Product : public QThread
+{
+    Q_OBJECT
+    void run() override;
+
+private:
+    QSerialPort serial;
+    int numRead = 0;
+    int numReadTotal = 0;
+    char buffer[50];
+
+};
+
+
+
+#endif // PRODUCT_H
