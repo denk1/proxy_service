@@ -71,8 +71,8 @@ void MessageReciver::setData(uchar* in_ptr_data) {
 void MessageReciver::readingData()
 {
     int length = m_serial.bytesAvailable();
-    qDebug() << "New data available: " << m_serial.bytesAvailable();
-    qDebug() << "Previous data available: " << m_buff.size();
+    qDebug() << "The new data are available: " << m_serial.bytesAvailable();
+    qDebug() << "The previous data are available: " << m_buff.size();
     QByteArray data = m_serial.readAll();
     qDebug() << data;
     std::vector<uchar> v_buff;
