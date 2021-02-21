@@ -1,31 +1,63 @@
+#include <cstring>
+#include <algorithm>
 #include "packetswapper.h"
 
-PacketSwapper::PacketSwapper():
-    m_income_packet(m_packetUSB0.packet.header, m_packetUSB0.raw_data, sizeof(m_packetUSB0.raw_data)),
-    m_income_packet1(m_packetUSB0.packet.header, m_packetUSB1.raw_data, sizeof(m_packetUSB0.raw_data)),
-    m_outcome_packet(m_packetUSB1.packet.header, m_packetUDP.raw_data, sizeof(m_packetUDP.raw_data))
 
+
+PacketSwapper::PacketSwapper(Packet* packet, Packet* packet1):
+    is_newPacketUSB0(false),
+    is_newPacketUSB1(false),
+    p_packet(packet),
+    p_packet1(packet1)
 
 {
-    PacketUSB0 packetUSB0;
-    PacketUSB1 packetUSB1;
-    size_t s = sizeof(packetUSB0.raw_data);
 
-    size_t s1 = sizeof(packetUSB1.raw_data);
-
-    Packet packet0(packetUSB0.packet.header, packetUSB0.raw_data, s);
-
-    Packet packet1(packetUSB1.packet.header, packetUSB1.raw_data, s1);
 }
 
-void PacketSwapper::setValuePacketUSB0(uchar *data)
-{
-    m_mutex.lock();
-    m_mutex.unlock();
+bool PacketSwapper::createPacketUDP() {
+   memset(m_packetUDP.packet.data, 0, 9);
+   p_packet->lock();
+   mutex.lock();
+
+   if(is_newPacketUSB0) {
+       std::copy(m_buff_usb0, m_buff_usb0 + p_packet->getSizePayload() , m_packetUDP.packet.data);
+   }
+
+   is_newPacketUSB0 = false;
+   mutex.unlock();
+   p_packet->unlock();
+
+   p_packet1->lock();
+   mutex1.lock();
+
+   if(is_newPacketUSB0) {
+       std::copy(m_buff_usb1, m_buff_usb1 + p_packet->getSizePayload() , m_packetUDP.packet.data + p_packet->getSizePayload());
+   }
+
+   is_newPacketUSB1 = false;
+   mutex1.unlock();
+   p_packet1->unlock();
+
+   m_packetUDP.packet.index++;
+   return true;
 }
 
-void PacketSwapper::setValuePacketUSB1(uchar *data)
+void PacketSwapper::checkUSB0()
 {
-    m_mutex1.lock();
-    m_mutex1.unlock();
+    if(p_packet->isUpdated()) {
+        mutex.lock();
+        std::copy(p_packet->getPayloadData(), p_packet->getPayloadData() + p_packet->getSizePayload(), m_buff_usb0);
+        p_packet->setOldData();
+        mutex.unlock();
+    }
+}
+
+void PacketSwapper::checkUSB1()
+{
+    if(p_packet1->isUpdated()) {
+        mutex1.lock();
+        std::copy(p_packet1->getPayloadData(), p_packet1->getPayloadData() + p_packet1->getSizePayload(), m_buff_usb0);
+        p_packet1->setOldData();
+        mutex1.unlock();
+    }
 }

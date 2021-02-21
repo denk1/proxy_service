@@ -16,8 +16,6 @@ class MessageReciver : public QObject
 public:
     MessageReciver(QString port_name, Packet& packet, PacketSwapper* packetSwapper);
     ~MessageReciver();
-    unsigned short getCRC(uchar* data, size_t size);
-    unsigned short calcCRC(uchar* data, size_t size);
     void setData(uchar* in_ptr_data);
 private:
     QSerialPort m_serial;

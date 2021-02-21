@@ -1,7 +1,8 @@
 ﻿#include "messagereciver.h"
 #include <QDebug>
 #include <algorithm>
-#include "crc16modeprobe.h"
+#include "packetudp.h"
+
 
 
 MessageReciver::MessageReciver(QString port_name, Packet& packet, PacketSwapper* packetSwapper):m_serial(port_name),
@@ -45,26 +46,13 @@ MessageReciver::~MessageReciver()
     m_serial.close();
 }
 
-unsigned short MessageReciver::getCRC(uchar* data, size_t size)
-{
-    unsigned short *result;
-    uchar temp[2];
-    std::copy(data + size - 2, data + size, temp);
-    result = reinterpret_cast<unsigned short*>(temp);
-    return *result;
-}
-
-unsigned short MessageReciver::calcCRC(uchar *data, size_t size)
-{
-    return CRC16(data + 3, 5);
-}
-
 void MessageReciver::setData(uchar* in_ptr_data) {
     bool result = false;
-    std::copy(in_ptr_data, in_ptr_data + m_packet.getSize(), m_packet.getData());
+
     qDebug() << "the packet has been written down";
-    if(getCRC(m_packet.getData(), m_packet.getSize()) == calcCRC(m_packet.getData(), m_packet.getSize()))
-        result = true;
+    if(m_packet.isCorrectCRC16()) {
+        m_packet.setData(in_ptr_data);
+    }
     qDebug() << result;
  }
 

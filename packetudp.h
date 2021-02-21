@@ -6,6 +6,7 @@ union PacketUDP {
     PacketUDP() {
         packet.header[0] = 0x55;
         packet.header[1] = 0x77;
+        packet.index = 0;
     }
     struct Packet {
         uchar header[2];

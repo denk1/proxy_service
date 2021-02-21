@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         messagereciver.cpp \
+        messagesender.cpp \
         packet.cpp \
         packetfinder.cpp \
         packetswapper.cpp
@@ -31,6 +32,7 @@ HEADERS += \
     PacketUSB1.h \
     crc16modeprobe.h \
     messagereciver.h \
+    messagesender.h \
     packet.h \
     packetfinder.h \
     packetswapper.h \
