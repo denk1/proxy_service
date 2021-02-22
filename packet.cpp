@@ -16,7 +16,6 @@ void Packet::setData(uchar *data)
     m_mutex.lock();
     std::copy(data, data + getSize(), getData());
     m_mutex.unlock();
-    m_is_new_packet = true;
 }
 
 unsigned short Packet::getCRC()

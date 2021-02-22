@@ -13,17 +13,17 @@ public:
     MessageSender(PacketSwapper* packetSwapper);
 public slots:
     void slotUpdateUSB0() {
-        qDebug() << "This is from slotUpdateUSB0";
+        //qDebug() << "This is from slotUpdateUSB0";
         p_packetSwapper->checkUSB0();
     }
 
     void slotUpdateUSB1() {
-        qDebug() << "This is from slotUpdateUSB1";
+        //qDebug() << "This is from slotUpdateUSB1";
         p_packetSwapper->checkUSB1();
     }
 
     void slotSendData() {
-        qDebug() << "This is from slotSendData";
+        //qDebug() << "This is from slotSendData";
         p_packetSwapper->createPacketUDP();
     }
 

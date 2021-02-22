@@ -48,13 +48,12 @@ MessageReciver::~MessageReciver()
 
 void MessageReciver::setData(uchar* in_ptr_data) {
     bool result = false;
-
+    m_packet.setData(in_ptr_data);
     qDebug() << "the packet has been written down";
     if(m_packet.isCorrectCRC16()) {
-        m_packet.setData(in_ptr_data);
+        m_packet.setAdmitedStatus();
     }
-    qDebug() << result;
- }
+}
 
 void MessageReciver::readingData()
 {

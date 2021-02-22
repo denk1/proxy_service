@@ -54,6 +54,10 @@ public:
         return m_is_new_packet;
     }
 
+    void setAdmitedStatus() {
+        m_is_new_packet = true;
+    }
+
 private:
     uchar* const m_data;
     const size_t m_length;

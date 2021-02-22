@@ -2,6 +2,7 @@
 #define PACKETSWAPPER_H
 
 #include <QMutex>
+#include <vector>
 #include "packet.h"
 #include "packetudp.h"
 
@@ -18,8 +19,8 @@ private:
     bool is_newPacketUSB0;
     bool is_newPacketUSB1;
 
-    uchar* m_buff_usb0;
-    uchar* m_buff_usb1;
+    std::vector<uchar> m_buff_usb0;
+    std::vector<uchar> m_buff_usb1;
     PacketUDP m_packetUDP;
     Packet* p_packet;
     Packet* p_packet1;
