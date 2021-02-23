@@ -1,5 +1,6 @@
 QT -= gui
 QT += serialport
+QT += network
 CONFIG += c++11 console
 CONFIG -= app_bundle
 
@@ -20,7 +21,8 @@ SOURCES += \
         messagesender.cpp \
         packet.cpp \
         packetfinder.cpp \
-        packetswapper.cpp
+        packetswapper.cpp \
+        udpsender.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -36,4 +38,5 @@ HEADERS += \
     packet.h \
     packetfinder.h \
     packetswapper.h \
-    packetudp.h
+    packetudp.h \
+    udpsender.h

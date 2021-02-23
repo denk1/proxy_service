@@ -5,6 +5,7 @@
 #include <vector>
 #include "packet.h"
 #include "packetudp.h"
+#include "udpsender.h"
 
 class PacketSwapper
 {
@@ -26,6 +27,8 @@ private:
     Packet* p_packet1;
     QMutex mutex;
     QMutex mutex1;
+
+    UdpSender m_udpSender;
 
 };
 
