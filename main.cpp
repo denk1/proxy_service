@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
 
     Packet packet1(packetUSB1.packet.header, packetUSB1.raw_data, s1);
     PacketSwapper packetSwapper(&packet0, &packet1);
+    // Please uncomment for working with 2 ports
     //MessageReciver messageReciever("/home/suvairin/ttySerial2", packet1, &packetSwapper);
     MessageReciver messageReciever1("/home/suvairin/ttySerial1", packet1, &packetSwapper);
     MessageSender messageSender(&packetSwapper);
